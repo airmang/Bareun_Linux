@@ -4,7 +4,7 @@ from bareunpy import Tagger
 
 #initiate bareun
 API_KEY="koba-YEVHS7Q-VDSUWIY-XCIS3OQ-LWD7WHA"
-tagger = Tagger(API_KEY, 'localhost')
+tagger = Tagger(API_KEY, 'localhost',5656)
 
 class morph:
     def __init__(self, sentence):
