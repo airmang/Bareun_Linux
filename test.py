@@ -13,7 +13,7 @@ tagger = Tagger(API_KEY, 'localhost')
 
 
 # print results. 
-res = tagger.tags(["안녕하세요.", "반가워요!"])
+res = tagger.tags(["윤경아 빠르게 먹자."])
 
 # get protobuf message.
 m = res.msg()

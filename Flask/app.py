@@ -11,7 +11,6 @@ def index():
     return render_template("index.html")
 
 @app.route('/termination', methods=['GET', 'POST'])
-
 def termination():
     if request.method == 'POST':
         data = request.form['data']
@@ -21,6 +20,10 @@ def termination():
         return render_template('result.html', data=data)
     else:
         return render_template('form.html')
+    
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
 
 if __name__ == '__main__':
     app.run()
