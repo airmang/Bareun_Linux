@@ -13,7 +13,7 @@ tagger = Tagger(API_KEY, 'localhost')
 
 
 # print results. 
-res = tagger.tags(["윤경아 빠르게 먹자."])
+res = tagger.tags(["철수는 영희가 온다는 사실을 알았다."])
 
 # get protobuf message.
 m = res.msg()
@@ -47,3 +47,4 @@ na = res.nouns()
 print(na)
 va = res.verbs()
 print(va)
+
