@@ -1,9 +1,11 @@
 <!doctype html>
 <html>
   {% include "header.html" %}
-    
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridjs@1.2.0/dist/theme/mermaid.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gridjs@1.2.0/dist/gridjs.production.min.js"></script>  
     <!-- About-->
     <section class="content-section bg-light" id="about">
+    
       <div class="container px-4 px-lg-5 text-center">
           <div class="row gx-4 gx-lg-5 justify-content-center">
               <div class="col-lg-10">
@@ -12,12 +14,37 @@
           </div>
           <br><br>
           <h4>입력한 문장</h4>
-          {% if data %}
+          {% if sentence %}
           <div class="alert alert-success mt-3">
             <p>{{ sentence }}</p>
           </div>
+          <h4>어절 단위 분석</h4>
           <div class="alert alert-success mt-3">
-            <p>{{ data }}</p>
+            <p>{{ seg_data }}</p>
+          </div>
+          <h4>형태소 단위 분석</h4>
+          <div class="alert alert-success mt-3">
+            <p>{{ morph_data }}</p>
+          </div>
+          <h6>체언</h6>
+          <div class="alert alert-success mt-3">
+            <p>{{ substantives_data }}</p>
+          </div>
+          <h6>용언</h6>
+          <div class="alert alert-success mt-3">
+            <p>{{ predicates_data }}</p>
+          </div>
+          <h6>수식언</h6>
+          <div class="alert alert-success mt-3">
+            <p>{{ modifier_data }}</p>
+          </div>
+          <h6>관계언</h6>
+          <div class="alert alert-success mt-3">
+            <p>{{ relative_data }}</p>
+          </div>
+          <h6>어미</h6>
+          <div class="alert alert-success mt-3">
+            <p>{{ termination_data }}</p>
           </div>
           {% endif %}
       </div>
