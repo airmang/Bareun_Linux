@@ -31,10 +31,11 @@ def tokenize():
         modifier_data = M1.modifier() #수식언
         relative_data = M1.relative() #관계언
         termination_data = M1.termination() #어미
+        msgdata = M1.message()
         
         
 
-        return render_template('tokenize_result.html', termination_data = termination_data, relative_data = relative_data, modifier_data = modifier_data, predicates_data = predicates_data, substantives_data = substantives_data, morph_data = morph_data, seg_data = seg_data, sentence = data)
+        return render_template('tokenize_result.html',data = msgdata, termination_data = termination_data, relative_data = relative_data, modifier_data = modifier_data, predicates_data = predicates_data, substantives_data = substantives_data, morph_data = morph_data, seg_data = seg_data, sentence = data)
     else:
         return render_template('tokenize_form.html')
 
@@ -54,14 +55,7 @@ def embrace():
     
 @app.route('/contact')
 def contact():
-    T2 = stemmer.morph('안녕 나의 사랑.')
-    testdata = T2.list()
-    msgdata = T2.message()
-    jsontestdata = json.dumps(testdata, ensure_ascii=False)
-    print(msgdata)
-    print(type(msgdata))
-    print(jsontestdata)
-    return render_template("tabletest.html", data = msgdata)
+    return render_template("contact.html")
 
 if __name__ == '__main__':
     FlaskUI(app=app, server="flask").run()

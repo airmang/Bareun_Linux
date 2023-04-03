@@ -13,7 +13,44 @@
               </div>
           </div>
           <br><br>
-          <h4>입력한 문장</h4>
+          <!-- jinja2 템플릿 활용 표-->
+          <body>
+            <div class="container">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>입력한문장</th>
+                    <th>어절</th>
+                    <th>형태소</th>
+                    <th>태그</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for sentence in data['sentences'] %}
+                  {% for token in sentence['tokens'] %}
+                  <tr>
+                    {% if loop.index == 1 %}
+                    <td rowspan="{{ sentence['text']['length'] }}">{{ sentence['text']['content'] }}</td>
+                    {% endif %}
+                    <td >{{ token['text']['content'] }}</td>
+                    <td>{{ token['morphemes'][0]['text']['content'] }}</td>
+                    <td>{{ token['morphemes'][0]['tag'] }}</td>
+                  </tr>
+                  {% for morpheme in token['morphemes'][1:] %}
+                  <tr>
+                    <td></td>
+                    <td>{{ morpheme['text']['content'] }}</td>
+                    <td>{{ morpheme['tag'] }}</td>
+                  </tr>
+                  {% endfor %}
+                  {% endfor %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            
+          </body>
+          <!--<h4>입력한 문장</h4>
           {% if sentence %}
           <div class="alert alert-success mt-3">
             <p>{{ sentence }}</p>
@@ -25,7 +62,7 @@
           <h4>형태소 단위 분석</h4>
           <div class="alert alert-success mt-3">
             <p>{{ morph_data }}</p>
-          </div>
+          </div>-->
           <h6>체언</h6>
           <div class="alert alert-success mt-3">
             <p>{{ substantives_data }}</p>
@@ -54,5 +91,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     <script src="{{url_for('static', filename='../static/js/scripts.js')}}"></script>
+    <!-- Link to Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -25,7 +25,16 @@ class morph:
 
     def message(cls):
         res = tagger.tags([cls.sentence])
-        return res.as_json()
+        json_res = res.as_json()
+        print(json_res)
+        for sentence in json_res['sentences']:
+            for token in sentence['tokens']:
+                for morpheme in token['morphemes']:
+                    tag = morpheme['tag']
+                    if tag in cls.pos_dict:
+                        morpheme['tag'] = cls.pos_dict[tag]
+        print(json_res)
+        return json_res
 
     #어절 단위로 나누는 메소드
     def list(cls):
@@ -94,8 +103,8 @@ class tokenize:
         return ss
     
     
-S1 = morph('철수는 영희가 온다는 사실을 알았다.')
-S1.substantives()
-P1 = tokenize('철수는 영희가 온다는 사실을 알았다.')
+S1 = morph('안녕 나의 사랑.')
+S1.message()
+#P1 = tokenize('철수는 영희가 온다는 사실을 알았다.')
 
 
