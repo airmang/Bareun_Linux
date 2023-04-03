@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dictionary Table</title>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Sentence Text</th>
+          <th>Token Text</th>
+          <th>Token Tag</th>
+          <th>Token Probability</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sentence in data['sentences'] %}
+        {% for token in sentence['tokens'] %}
+        <tr>
+          {% if loop.index == 1 %}
+          <td rowspan="{{ sentence['text']['length'] }}">{{ sentence['text']['content'] }}</td>
+          {% endif %}
+          <td>{{ token['text']['content'] }}</td>
+          <td>{{ token['morphemes'][0]['tag'] }}</td>
+          <td>{{ token['morphemes'][0]['probability'] }}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

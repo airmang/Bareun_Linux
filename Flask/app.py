@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 import google.protobuf.text_format as tf
 import os
 import sys
+import json
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import stemmer
 from flaskwebgui import FlaskUI
@@ -53,7 +54,14 @@ def embrace():
     
 @app.route('/contact')
 def contact():
-    return render_template("contact.html")
+    T2 = stemmer.morph('안녕 나의 사랑.')
+    testdata = T2.list()
+    msgdata = T2.message()
+    jsontestdata = json.dumps(testdata, ensure_ascii=False)
+    print(msgdata)
+    print(type(msgdata))
+    print(jsontestdata)
+    return render_template("tabletest.html", data = msgdata)
 
 if __name__ == '__main__':
     FlaskUI(app=app, server="flask").run()

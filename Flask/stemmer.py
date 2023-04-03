@@ -25,7 +25,7 @@ class morph:
 
     def message(cls):
         res = tagger.tags([cls.sentence])
-        return res.msg()
+        return res.as_json()
 
     #어절 단위로 나누는 메소드
     def list(cls):
