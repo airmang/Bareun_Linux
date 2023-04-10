@@ -4,3 +4,4 @@
 >>>>>>> 9f7fe083190c92a2adf08bf66ba31df32bd842ae
 __pycache__/morph.cpython-310.pyc
 Flask/__pycache__/stemmer.cpython-310.pyc
+Flask/__pycache__/stemmer.cpython-311.pyc
