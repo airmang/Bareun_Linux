@@ -23,17 +23,37 @@ class morph:
                  'SF': '마침표,물음표,느낌표', 'SP': '쉼표,가운뎃점,콜론,빗금', 'SS': '따옴표,괄호표,줄표', 'SE': '줄임표', 'SO': '붙임표(물결,숨김,빠짐)', 'SW': '기타기호 (논리수학기호,화폐기호)', 'SL': '외국어', 'SH': '한자', 'SN': '숫자'}
 
 
+
+    #안긴문장 안은문장 메소드
+    def embrace(cls):
+        #전성 어미 (ETN=명사형, ETM=관형형)
+        embrace_keys ={'ETN', 'ETM'}
+        print(len(cls.morph_list))
+        for i in range(len(cls.morph_list)):
+            if cls.morph_list[i][1] in embrace_keys:
+                print(cls.morph_list[i], i)
+
+
+
+
+
+
+
+
+
+
+
     def message(cls):
         res = tagger.tags([cls.sentence])
         json_res = res.as_json()
-        print(json_res)
+        #print(json_res)
         for sentence in json_res['sentences']:
             for token in sentence['tokens']:
                 for morpheme in token['morphemes']:
                     tag = morpheme['tag']
                     if tag in cls.pos_dict:
                         morpheme['tag'] = cls.pos_dict[tag]
-        print(json_res)
+        #print(json_res)
         return json_res
 
     #어절 단위로 나누는 메소드
@@ -45,6 +65,7 @@ class morph:
         for sent in m.sentences:
             for token in sent.tokens:    
                 seg_list.append(token.text.content)
+        print(seg_list)
         return seg_list
 
     #체언 추출
@@ -103,8 +124,11 @@ class tokenize:
         return ss
     
     
-S1 = morph('안녕 나의 사랑.')
-S1.message()
+S1 = morph('기분이 좋은 철수는 영희가 온다는 사실을 알았다.')
+S1.embrace()
+#P1 = morph('안녕 나의 사랑')
+#P1.list()
+
 #P1 = tokenize('철수는 영희가 온다는 사실을 알았다.')
 
 
