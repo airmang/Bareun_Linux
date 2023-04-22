@@ -28,10 +28,60 @@ class morph:
     def embrace(cls):
         #전성 어미 (ETN=명사형, ETM=관형형)
         embrace_keys ={'ETN', 'ETM'}
+        print(cls.morph_list)
         print(len(cls.morph_list))
+
+        pivot =[]
+        flag = []
+        driver = 0
+        #관형절을 안은 문장
+        
         for i in range(len(cls.morph_list)):
-            if cls.morph_list[i][1] in embrace_keys:
+            if cls.morph_list[i][1] == 'ETM':
                 print(cls.morph_list[i], i)
+                flag.append(i)
+                pivot.append(i)                
+        
+                while(True):
+                    if cls.morph_list[flag[driver]][1] in ['JKB', 'JX'] :
+                        for i in range(flag[driver]+1, pivot[driver]+1):
+                            print(cls.morph_list[i])
+                        break
+                    if cls.morph_list[flag[driver]][1] == 'JKS' :
+                        for i in range(flag[driver]-1, pivot[driver]+1):
+                            print(cls.morph_list[i])
+                        break
+                    if flag[driver] == 0:
+                        flag[driver] = 1
+                        for i in range(flag[driver]-1, pivot[driver]+1):
+                            print(cls.morph_list[i])
+                        break
+                    flag[driver] = flag[driver] - 1
+                
+                driver = driver + 1
+
+        #명사절을 안은 문장
+        for i in range(len(cls.morph_list)):
+            if cls.morph_list[i][1] == 'ETN':
+                print(cls.morph_list[i], i)
+                flag = i
+                pivot.append(i)
+        
+                while(True):
+                    if cls.morph_list[flag][1] == 'JKS':
+                        break
+                    if flag == 0:
+                        flag = 1
+                        break
+                    flag = flag - 1
+                
+                for i in range(flag-1, pivot[0]+1):
+                    print(cls.morph_list[i])
+
+
+
+
+        
 
 
 
@@ -123,9 +173,28 @@ class tokenize:
         print(ss)
         return ss
     
-    
-S1 = morph('기분이 좋은 철수는 영희가 온다는 사실을 알았다.')
-S1.embrace()
+
+#관형절을 안은 문장    
+S1_1 = morph('누나가 책을 읽은 도서관은 집 근처에 있다.')
+S1_2 = morph('산에 이쁜 꽃이 피었다.')
+S1_3 = morph('그는 어제 먹다 남은 과자를 버렸다.')
+S1_4 = morph('친구는 내일 소풍 갈 장소를 검색했다.')
+#명사절을 안은 문장
+S2 = morph('나는 등교수업이 재기되기를 바란다.')
+#부사절을 안은 문장
+S3 = morph('영희가 눈물을 철수가 떠나자 흘렸다.')
+#서술절을 안은 문장
+S4 = morph('영희가 키가 크다.')
+#인용절을 안은 문장
+S5 = morph('철수가 영희가 좋다고 말했다.')
+S1_1.message()
+S1_1.embrace()
+S1_2.embrace()
+S1_3.embrace()
+S1_4.embrace()
+#S2.message()
+#S2.embrace()
+
 #P1 = morph('안녕 나의 사랑')
 #P1.list()
 
