@@ -31,13 +31,17 @@ class morph:
         print(cls.morph_list)
         print(len(cls.morph_list))
 
+        SS_pivot = []
         pivot =[]
         flag = []
         driver = 0
-        #관형절을 안은 문장
+        ter_switch = 0
+
         
         for i in range(len(cls.morph_list)):
+            #관형절을 안은 문장
             if cls.morph_list[i][1] == 'ETM':
+                ter_switch = 1
                 print(cls.morph_list[i], i)
                 flag.append(i)
                 pivot.append(i)                
@@ -59,29 +63,123 @@ class morph:
                     flag[driver] = flag[driver] - 1
                 
                 driver = driver + 1
-
-        #명사절을 안은 문장
-        for i in range(len(cls.morph_list)):
+            #명사절을 안은 문장
             if cls.morph_list[i][1] == 'ETN':
+                ter_switch = 1
                 print(cls.morph_list[i], i)
-                flag = i
+                flag.append(i)
                 pivot.append(i)
         
                 while(True):
-                    if cls.morph_list[flag][1] == 'JKS':
+                    if cls.morph_list[flag[driver]][1] in ['JKB', 'JX'] :
+                        for i in range(flag[driver]+1, pivot[driver]+1):
+                            print(cls.morph_list[i])
                         break
-                    if flag == 0:
-                        flag = 1
+                    if cls.morph_list[flag[driver]][1] == 'JKS':
+                        for i in range(flag[driver]-1, pivot[driver]+1):
+                            print(cls.morph_list[i])
                         break
-                    flag = flag - 1
+                    if flag[driver] == 0:
+                        flag[driver] = 1
+                        for i in range(flag[driver]-1, pivot[driver]+1):
+                            print(cls.morph_list[i])
+                        break
+                    flag[driver] = flag[driver] - 1
                 
-                for i in range(flag-1, pivot[0]+1):
-                    print(cls.morph_list[i])
+                driver = driver + 1
 
+            #부사절을 안은 문장
+            
+            #인용절을 안은 문장
+            #('라고', 'JKQ')를 포함하거나 ('고'로 끝나는 'EC''자고','다고','냐고','라고') 연결어미를 포함할 경우
+            if (cls.morph_list[i][1] =='JKQ') or ((cls.morph_list[i][1] == 'EC') and (cls.morph_list[i][0] in ['라고','자고', '다고', '냐고','느냐고'])):
+                ter_switch = 1
+                print(cls.morph_list[i], i)
+                flag.append(i)
+                pivot.append(i)
 
+                while(True):
+                    if cls.morph_list[flag[driver]][1] in ['JKB', 'JX'] :
+                        for i in range(flag[driver]+1, pivot[driver]+1):
+                            print(cls.morph_list[i],1)
+                        break
+                    if cls.morph_list[flag[driver]][1] == 'JKS' :
+                        JKS_FLAG = flag[driver] - 1
+                        while(True):
+                            if cls.morph_list[JKS_FLAG][1] =='JKS' :
+                                for i in range(flag[driver]-1, pivot[driver]+1):
+                                    print(cls.morph_list[i],2)
+                                break
+                            elif JKS_FLAG == 0:
+                                flag[driver] = 1
+                                for i in range(flag[driver]+1, pivot[driver]+1):
+                                    print(cls.morph_list[i],3)
+                                break
+                            JKS_FLAG = JKS_FLAG - 1
+                        break
+                    
+                    elif flag[driver] == 0:
+                        flag[driver] = 1
+                        for i in range(flag[driver]-1, pivot[driver]+1):
+                            print(cls.morph_list[i],4)
+                        break
+                        
+                    flag[driver] = flag[driver] - 1
+                
+                driver = driver + 1
 
+        #서술절을 안은 문장(주어1+(주어2+서술어))
+        #(은/는 다음으로 이/가 또는 이/가 다음으로 은/는)(보격조사('JKC')를 포함하면 안된다.)
+        #case1: JKS + JKS + NOT(JKC)
+        #case2: JKS + JX + NOT(JKC)
+        #case3: JX + JKS + NOT(JKC)
+        if ter_switch == 0:
+            V_check = 0
+            JKC_check = 0
 
-        
+            for i in range(len(cls.morph_list)):
+                if cls.morph_list[i][1] == 'JKS' or cls.morph_list[i][1] == 'JX' :
+                    if cls.morph_list[i][1] == 'JKS':
+                        SS_pivot.append(i)
+                        for j in range(i+1, len(cls.morph_list)):
+                            if cls.morph_list[j][1] in {'VV', 'VA', 'VX', 'VCP', 'VCN'}:
+                                V_check = 1
+                            if V_check == 0 and cls.morph_list[j][1] in ['JKS', 'JX']:
+                                # case 1, case 2 만족                                
+                                for k in range(j, len(cls.morph_list)):
+                                    if cls.morph_list[k][1] == 'JKC':
+                                        JKC_check = 1
+                                        break
+                                if JKC_check == 0:
+                                    print('case 1 or case 2')                                   
+                                    for i in range(SS_pivot[driver]+1, len(cls.morph_list)):
+                                        print(cls.morph_list[i],4)
+                                    driver = driver + 1                                                                
+                        break
+                    
+                    if cls.morph_list[i][1] == 'JX':
+                        SS_pivot.append(i)
+                        for j in range(i+1, len(cls.morph_list)):
+                            if cls.morph_list[j][1] in {'VV', 'VA', 'VX', 'VCP', 'VCN'}:
+                                V_check = 1
+                            if V_check == 0 and cls.morph_list[j][1] == 'JKS':
+                                # case 3 만족
+                                for k in range(j, len(cls.morph_list)):
+                                    if cls.morph_list[k][1] == 'JKC':
+                                        JKC_check = 1
+                                        break
+                                if JKC_check == 0:
+                                    print('case 3')
+                                    for i in range(SS_pivot[driver]+1, len(cls.morph_list)):
+                                        print(cls.morph_list[i],4)
+                                    driver = driver + 1                          
+                        break
+                
+
+                    
+            
+            
+
 
 
 
@@ -179,21 +277,68 @@ S1_1 = morph('누나가 책을 읽은 도서관은 집 근처에 있다.')
 S1_2 = morph('산에 이쁜 꽃이 피었다.')
 S1_3 = morph('그는 어제 먹다 남은 과자를 버렸다.')
 S1_4 = morph('친구는 내일 소풍 갈 장소를 검색했다.')
+S1_test1 = morph('우리가 여행 갈 곳을 찾아보자.')
+S1_test2 = morph('규현이는 잡고 있던 손을 놓지 않았다.')
 #명사절을 안은 문장
-S2 = morph('나는 등교수업이 재기되기를 바란다.')
+S2_1 = morph('나는 등교수업이 재기되기를 바란다.')
+S2_2 = morph('우리는 그가 옳았음을 알았다.')
+S2_3 = morph('나는 시험이 끝나기를 기다렸다.')
+S2_test1 = morph('당시에 그곳이 공사중이었음을 모르는 사람이 없다.')
 #부사절을 안은 문장
-S3 = morph('영희가 눈물을 철수가 떠나자 흘렸다.')
+S3_1 = morph('영희가 눈물을 철수가 떠나자 흘렸다.')
+S3_2 = morph('누군가 소리도 없이 그녀에게 다가왔다.')
+S3_3 = morph('진달래가 ')
 #서술절을 안은 문장
-S4 = morph('영희가 키가 크다.')
+S4_1 = morph('영희가 키가 크다.')
+S4_2 = morph('철수는 키가 작다.')
+S4_3 = morph('민수가 키는 작다.')
+S4_4 = morph('철수가 대학생이 되었다.')
+S4_5 = morph('영희는 범인이 아니다.')
+S4_test1 = morph('거북이가 걸음이 느리다.')
+S4_test2 = morph('토끼는 거북이가 아니다.')
+S4_test3 = morph('용왕님은 옷이 화려하다.')
 #인용절을 안은 문장
-S5 = morph('철수가 영희가 좋다고 말했다.')
-S1_1.message()
-S1_1.embrace()
-S1_2.embrace()
-S1_3.embrace()
-S1_4.embrace()
-#S2.message()
-#S2.embrace()
+S5_1 = morph('찰수가 얼른 가라고 했어.')
+S5_2 = morph('철수가 영희가 좋다고 말했다.')
+S5_3 = morph('민수는 내게 친구들의 이름을 다 아느냐고 물었다.')
+S5_4 = morph('철수는 영희가 온다는 사실을 알았다.')
+S5_test1 = morph('얼른 진도를 나가자고 제안했다.')
+
+S_test1 = morph('플래시는 고규현의 인생 기대작 중 하나다.')
+S_test2 = morph('가오갤에서 제일 좋아하는 캐릭터는 그루트다.')
+
+#S1_1.embrace()
+#S1_2.embrace()
+#S1_3.embrace()
+#S1_4.embrace()
+#S1_test1.embrace()
+#S1_test2.embrace()
+
+#S2_1.embrace()
+#S2_2.embrace()
+#S2_3.embrace()
+#S2_test1.embrace()
+
+#S3_1.embrace()
+#S3_2.embrace()
+
+#S4_1.embrace()
+#S4_2.embrace()
+#S4_3.embrace()
+#S4_4.embrace()
+#S4_5.embrace()
+#S4_test1.embrace()
+#S4_test2.embrace()
+#S4_test3.embrace()
+
+#S5_1.embrace()
+#S5_2.embrace()
+#S5_3.embrace()
+#S5_4.embrace()
+#S5_test1.embrace()
+
+S_test1.embrace()
+S_test2.embrace()
 
 #P1 = morph('안녕 나의 사랑')
 #P1.list()
