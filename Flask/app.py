@@ -40,16 +40,16 @@ def tokenize():
         return render_template('tokenize_form.html')
 
 
-#어미 분석 페이지
+#안긴문장 분석 페이지
 @app.route('/embrace', methods=['GET', 'POST'])
 def embrace():
     if request.method == 'POST':
         data = request.form['data']
         S1 = stemmer.morph(data)
-        terminate_data = S1.termination()
+        embrace_data = S1.embrace()
         
 
-        return render_template('embrace_result.html', data=terminate_data, data2 = data)
+        return render_template('embrace_result.html', data=embrace_data, data2 = data)
     else:
         return render_template('embrace_form.html')
     
