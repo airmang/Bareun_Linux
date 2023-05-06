@@ -12,14 +12,35 @@
           </div>
           {% if data %}
           <div class="alert alert-success mt-3">
-            <p>{{ data }}</p>
-          </div>
-          <div class="alert alert-success mt-3">
             <p>{{ data2 }}</p>
           </div>
+          <ul class="list-group">
+            {% if data[0] %}
+            <li class="list-group-item list-group-item-primary">{{data[0]}}</li>
+            {% endif %}
+            {% if data[1] %}
+            <li class="list-group-item list-group-item-dark">{{data[1]}}</li>
+            {% endif %}
+            {% if data[2]%}
+            <li class="list-group-item list-group-item-danger">{{data[2]}}</li>
+            {% endif %}
+            {% if data[3]%}
+            <li class="list-group-item list-group-item-warning">{{data[3]}}</li>
+            {% endif %}
+            {% if data[4]%}
+            <li class="list-group-item list-group-item-info">{{data[4]}}</li>
+            {% endif %}
+            {% if data[5]%}
+            <li class="list-group-item list-group-item-light">{{data[5]}}</li>
+            {% endif %}
+          </ul>
           {% endif %}
+          <br>
+          <a class="btn btn-primary btn-xl" href="{{url_for('embrace')}}">다시하기</a>
       </div>
     </section>
+    
+    
     {% include "footer.html" %}
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

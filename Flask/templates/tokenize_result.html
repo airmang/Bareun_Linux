@@ -64,34 +64,30 @@
             <p>{{ morph_data }}</p>
           </div>-->
           <h6>체언</h6>
-          <div class="alert alert-success mt-3">
+          <div class="alert alert-primary mt-3">
             <p>{{ substantives_data }}</p>
           </div>
           <h6>용언</h6>
-          <div class="alert alert-success mt-3">
+          <div class="alert alert-secondary mt-3">
             <p>{{ predicates_data }}</p>
           </div>
           <h6>수식언</h6>
-          <div class="alert alert-success mt-3">
+          <div class="alert alert-danger mt-3">
             <p>{{ modifier_data }}</p>
           </div>
           <h6>관계언</h6>
-          <div class="alert alert-success mt-3">
+          <div class="alert alert-warning mt-3">
             <p>{{ relative_data }}</p>
           </div>
           <h6>어미</h6>
-          <div class="alert alert-success mt-3">
+          <div class="alert alert-info mt-3">
             <p>{{ termination_data }}</p>
           </div>
           {% endif %}
-          <form method="post">
-            <div class="form-group">
-              <label for="data">문장</label>
-              <input type="hidden" class="form-control" id="data" name="data" value = {{sentence}}>
-            </div>
-            <a class="btn btn-primary btn-xl" href="{{url_for('embrace')}}">안긴문장 분석하기</a>
-          </form>
-          
+          <a class="btn btn-primary btn-xl" href="{{url_for('embrace')}}">안긴문장 분석하기</a>
+          <a class="btn btn-primary btn-xl" href="{{url_for('tokenize')}}">다시하기</a>
+        </div>
+    
       </div>
     </section>
     {% include "footer.html" %}

@@ -2,6 +2,7 @@ import sys
 import google.protobuf.text_format as tf
 from bareunpy import Tagger
 from bareunpy import Tokenizer
+from collections import defaultdict
 
 #initiate bareun
 API_KEY="koba-YEVHS7Q-VDSUWIY-XCIS3OQ-LWD7WHA"
@@ -35,6 +36,7 @@ class morph:
         flag = []
         driver = 0
         ter_switch = 0
+        embrace_dict = defaultdict(list)
         embrace_result = []
         
         for i in range(len(cls.morph_list)):
@@ -49,18 +51,21 @@ class morph:
                     if cls.morph_list[flag[driver]][1] in ['JKB', 'JX'] :
                         for i in range(flag[driver]+1, pivot[driver]+1):
                             print(cls.morph_list[i])
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     if cls.morph_list[flag[driver]][1] == 'JKS' :
                         for i in range(flag[driver]-1, pivot[driver]+1):
                             print(cls.morph_list[i])
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     if flag[driver] == 0:
                         flag[driver] = 1
                         for i in range(flag[driver]-1, pivot[driver]+1):
                             print(cls.morph_list[i])
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     flag[driver] = flag[driver] - 1
                 
@@ -76,7 +81,8 @@ class morph:
                     if cls.morph_list[flag[driver]][1] in ['JKB', 'JX'] :
                         for i in range(flag[driver]+1, pivot[driver]+1):
                             print(cls.morph_list[i])
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     if cls.morph_list[flag[driver]][1] == 'JKS':                        
                         for j in range(flag[driver]-1, 0, -1):
@@ -85,13 +91,15 @@ class morph:
                             
                         for i in range(j+1, pivot[driver]+1):
                             print(cls.morph_list[i])
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     if flag[driver] == 0:
                         flag[driver] = 1
                         for i in range(flag[driver]-1, pivot[driver]+1):
                             print(cls.morph_list[i])
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     flag[driver] = flag[driver] - 1
                 
@@ -101,7 +109,7 @@ class morph:
             
             #인용절을 안은 문장
             #('라고', 'JKQ')를 포함하거나 ('고'로 끝나는 'EC''자고','다고','냐고','라고') 연결어미를 포함할 경우
-            if (cls.morph_list[i][1] =='JKQ') or ((cls.morph_list[i][1] == 'EC') and (cls.morph_list[i][0] in ['라고','자고', '다고', '냐고','느냐고'])):
+            if (cls.morph_list[i][1] =='JKQ') or ((cls.morph_list[i][1] == 'EC') and (cls.morph_list[i][0] in ['라고','자고', '다고', '냐고','느냐고', 'ㄴ다고'])):
                 ter_switch = 1
                 print(cls.morph_list[i], i)
                 flag.append(i)
@@ -111,7 +119,8 @@ class morph:
                     if cls.morph_list[flag[driver]][1] in ['JKB', 'JX'] :
                         for i in range(flag[driver]+1, pivot[driver]+1):
                             print(cls.morph_list[i],1)
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                     if cls.morph_list[flag[driver]][1] == 'JKS' :
                         JKS_FLAG = flag[driver] - 1
@@ -119,13 +128,15 @@ class morph:
                             if cls.morph_list[JKS_FLAG][1] =='JKS' :
                                 for i in range(flag[driver]-1, pivot[driver]+1):
                                     print(cls.morph_list[i],2)
-                                    embrace_result.append(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
                                 break
                             elif JKS_FLAG == 0:
                                 flag[driver] = 1
                                 for i in range(flag[driver]+1, pivot[driver]+1):
                                     print(cls.morph_list[i],3)
-                                    embrace_result.append(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
                                 break
                             JKS_FLAG = JKS_FLAG - 1
                         break
@@ -134,7 +145,8 @@ class morph:
                         flag[driver] = 1
                         for i in range(flag[driver]-1, pivot[driver]+1):
                             print(cls.morph_list[i],4)
-                            embrace_result.append(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
                         break
                         
                     flag[driver] = flag[driver] - 1
@@ -167,7 +179,8 @@ class morph:
                                     print('case 1 or case 2')                                   
                                     for i in range(SS_pivot[driver]+1, len(cls.morph_list)):
                                         print(cls.morph_list[i],4)
-                                        embrace_result.append(cls.morph_list[i])
+                                        #embrace_result.append(cls.morph_list[i])
+                                        embrace_dict[driver].append(cls.morph_list[i][0])
                                     driver = driver + 1                                                                
                         break
                     
@@ -186,10 +199,12 @@ class morph:
                                     print('case 3')
                                     for i in range(SS_pivot[driver]+1, len(cls.morph_list)):
                                         print(cls.morph_list[i],4)
-                                        embrace_result.append(cls.morph_list[i])
+                                        #embrace_result.append(cls.morph_list[i])
+                                        embrace_dict[driver].append(cls.morph_list[i][0])
                                     driver = driver + 1                          
                         break
-        return embrace_result
+        #print(list(embrace_dict.values()))            
+        return list(embrace_dict.values())
 
 
     def message(cls):
@@ -219,7 +234,7 @@ class morph:
     def offset(cls):
         res = tagger.tags([cls.sentence])
         m = res.msg()
-        print(m.sentences[0].tokens[1].text.begin_offset)
+        print(m.sentences[0].tokens[2].text.begin_offset)
 
     #체언 추출
     def substantives(cls):
@@ -310,44 +325,45 @@ S5_3 = morph('민수는 내게 친구들의 이름을 다 아느냐고 물었다
 S5_4 = morph('철수는 영희가 온다는 사실을 알았다.')
 S5_test1 = morph('얼른 진도를 나가자고 제안했다.')
 
-S_test1 = morph('플래시는 빠르다.')
+S_test1 = morph('플래시는 정말 빠르다.')
 S_test2 = morph('가오갤에서 제일 좋아하는 캐릭터는 그루트다.')
 
-S_test1.message()
-S_test1.offset()
+#S_test1.message()
+#S_test1.offset()
 
-#S1_1.embrace()
-#S1_2.embrace()
-#S1_3.embrace()
-#S1_4.embrace()
-#S1_test1.embrace()
-#S1_test2.embrace()
+S1_1.embrace()
+S1_2.embrace()
+S1_3.embrace()
+S1_4.embrace()
+S1_test1.embrace()
+S1_test2.embrace()
 
-#S2_1.embrace()
-#S2_2.embrace()
-#S2_3.embrace()
-#S2_4.embrace()
-#S2_test1.embrace()
+S2_1.embrace()
+S2_2.embrace()
+S2_3.embrace()
+S2_4.embrace()
+S2_test1.embrace()
 
-#S3_1.embrace()
-#S3_2.embrace()
+S3_1.embrace()
+S3_2.embrace()
 
-#S4_1.embrace()
-#S4_2.embrace()
-#S4_3.embrace()
-#S4_4.embrace()
-#S4_5.embrace()
-#S4_test1.embrace()
-#S4_test2.embrace()
-#S4_test3.embrace()
+S4_1.embrace()
+S4_2.embrace()
+S4_3.embrace()
+S4_4.embrace()
+S4_5.embrace()
+S4_test1.embrace()
+S4_test2.embrace()
+S4_test3.embrace()
 
-#S5_1.embrace()
-#S5_2.embrace()
-#S5_3.embrace()
-#S5_4.embrace()
-#S5_test1.embrace()
+S5_1.embrace()
+S5_2.embrace()
+S5_3.embrace()
+S5_4.embrace()
+S5_test1.embrace()
 
 #S_test1.embrace()
+#S_test2.message()
 #S_test2.embrace()
 
 #P1 = morph('안녕 나의 사랑')
