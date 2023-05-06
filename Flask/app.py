@@ -46,10 +46,10 @@ def embrace():
     if request.method == 'POST':
         data = request.form['data']
         S1 = stemmer.morph(data)
-        embrace_data = S1.embrace()
+        embrace_data, embrace_type = S1.embrace()
         
 
-        return render_template('embrace_result.html', data=embrace_data, data2 = data)
+        return render_template('embrace_result.html', data=embrace_data, data2 = data, data3=embrace_type)
     else:
         return render_template('embrace_form.html')
     

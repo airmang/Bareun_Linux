@@ -16,22 +16,28 @@
           </div>
           <ul class="list-group">
             {% if data[0] %}
-            <li class="list-group-item list-group-item-primary">{{data[0]}}</li>
+            <li class="list-group-item list-group-item-primary">{{data3[0]}}</li>
+            <li class="list-group-item list-group-item-warning">{{data[0]}}</li>
             {% endif %}
             {% if data[1] %}
-            <li class="list-group-item list-group-item-dark">{{data[1]}}</li>
+            <li class="list-group-item list-group-item-info">{{data3[1]}}</li>
+            <li class="list-group-item list-group-item-warning">{{data[1]}}</li>
             {% endif %}
             {% if data[2]%}
-            <li class="list-group-item list-group-item-danger">{{data[2]}}</li>
+            <li class="list-group-item list-group-item-danger">{{data3[2]}}</li>
+            <li class="list-group-item list-group-item-warning">{{data[2]}}</li>
             {% endif %}
             {% if data[3]%}
+            <li class="list-group-item list-group-item-light">{{data3[3]}}</li>
             <li class="list-group-item list-group-item-warning">{{data[3]}}</li>
             {% endif %}
             {% if data[4]%}
-            <li class="list-group-item list-group-item-info">{{data[4]}}</li>
+            <li class="list-group-item list-group-item-dark">{{data3[4]}}</li>
+            <li class="list-group-item list-group-item-warning">{{data[4]}}</li>
             {% endif %}
             {% if data[5]%}
-            <li class="list-group-item list-group-item-light">{{data[5]}}</li>
+            <li class="list-group-item list-group-item-default">{{data3[5]}}</li>
+            <li class="list-group-item list-group-item-warning">{{data[5]}}</li>
             {% endif %}
           </ul>
           {% endif %}
