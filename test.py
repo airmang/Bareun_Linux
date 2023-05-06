@@ -26,6 +26,7 @@ print(f'length of morphemes of first token in sentences[0] is {len(m.sentences[0
 print(f'lemma of first token in sentences[0] is {m.sentences[0].tokens[0].lemma}')
 print(f'first morph of first token in sentences[0] is {m.sentences[0].tokens[0].morphemes[0]}')
 print(f'tag of first morph of first token in sentences[0] is {m.sentences[0].tokens[0].morphemes[0].tag}')
+print(f'beginoffset {m.sentence[0].tokens[0]}')
 
 ## Advanced usage.
 for sent in m.sentences:
