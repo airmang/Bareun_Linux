@@ -137,7 +137,74 @@ class morph:
                 driver = driver + 1
 
             #부사절을 안은 문장
-            
+            #('없이', 'MAG'), ('게', 'EC'), ('도록', 'EC'), ('듯이', 'EC')
+            if ((cls.morph_list[i][1] == 'MAG') and (cls.morph_list[i][0] in ['없이'])) or ((cls.morph_list[i][1] == 'EC') and (cls.morph_list[i][0] in ['게','도록', '듯이'])):
+                ter_switch = 1
+                print(cls.morph_list[i], i)
+                flag.append(i)
+                pivot.append(i)
+                embrace_result[driver].append([cls.morph_list[i], '부사절을 안은 문장'])
+
+                while(True):
+                    
+                    if cls.morph_list[flag[driver]][1] == 'JKB' :
+                        #if cls.morph_list[flag[driver]+1][1] in ['VA']:
+                            for i in range(flag[driver]+1, pivot[driver]+1):
+                                print(cls.morph_list[i])
+                                #embrace_result.append(cls.morph_list[i])
+                                embrace_dict[driver].append(cls.morph_list[i][0])
+                            break
+                    
+                    if cls.morph_list[flag[driver]][1] == 'JX' :
+                        JX_FLAG = flag[driver] - 1
+                        while(True):
+                            if cls.morph_list[JX_FLAG][1] in ['JKB', 'JX', 'JKS'] :
+                                for i in range(JX_FLAG+1, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            elif JX_FLAG == 0:
+                                #flag[driver] = 1
+                                for i in range(flag[driver]+1, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            JX_FLAG = JX_FLAG - 1
+                        break
+                    
+                    if cls.morph_list[flag[driver]][1] == 'JKS' :
+                        
+                        JKS_FLAG = flag[driver] - 1
+                        while(True):
+                            if cls.morph_list[JKS_FLAG][1] in ['JKS', 'JX'] :
+                                for i in range(JKS_FLAG + 1, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            elif JKS_FLAG == 0:
+                                #flag[driver] = 1
+                                for i in range(flag[driver]+1, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            JKS_FLAG = JKS_FLAG - 1
+                        break
+                        
+                    if flag[driver] == 0:
+                        flag[driver] = 1
+                        for i in range(flag[driver]-1, pivot[driver]+1):
+                            print(cls.morph_list[i])
+                            #embrace_result.append(cls.morph_list[i])
+                            embrace_dict[driver].append(cls.morph_list[i][0])
+                        break
+                    flag[driver] = flag[driver] - 1
+                
+                driver = driver + 1
+
             #인용절을 안은 문장
             #('라고', 'JKQ')를 포함하거나 ('고'로 끝나는 'EC''자고','다고','냐고','라고') 연결어미를 포함할 경우
             if (cls.morph_list[i][1] =='JKQ') or ((cls.morph_list[i][1] == 'EC') and (cls.morph_list[i][0] in ['라고','자고', '다고', '냐고','느냐고', 'ㄴ다고'])):
@@ -343,9 +410,16 @@ S2_4 = morph('집에 불이 났음을 알았다.')
 S2_test1 = morph('당시에 그곳이 공사중이었음을 모르는 사람이 없다.')
 S2_test2 = morph('부모는 언제나 자식이 행복하기를 바란다.')
 #부사절을 안은 문장
-S3_1 = morph('영희가 눈물을 철수가 떠나자 흘렸다.')
-S3_2 = morph('누군가 소리도 없이 그녀에게 다가왔다.')
-S3_3 = morph('진달래가 ')
+S3_1 = morph('영수가 돈도 없이 여행을 떠났다.')
+S3_2 = morph('나무가 잘 클 수 있도록 창가에 두었다.')
+S3_3 = morph('그가 멋지게 등장했다.')
+S3_4 = morph('우리가 사람들이 지나가도록 길을 비켜 주었다.')
+S3_5 = morph('예림이는 다리가 아프도록 놀았어요.')
+S3_6 = morph('철수는 아무도 모르게 돌아왔다.')
+S3_7 = morph('나는 죽도록 일했다.')
+S3_8 = morph('그가 죽도록 맞았다.')
+S3_9 = morph('그녀가 미치듯이 보고싶다.')
+S3_test1 = morph('바다가 눈이 부시게 파랗다.')
 #서술절을 안은 문장
 S4_1 = morph('영희가 키가 크다.')
 S4_2 = morph('철수는 키가 작다.')
@@ -369,24 +443,32 @@ S_test2 = morph('가오갤에서 제일 좋아하는 캐릭터는 그루트다.'
 #S_test1.offset()
 
 
-S1_2.embrace()
-S1_3.embrace()
-S1_4.embrace()
-S1_test1.embrace()
-S1_test2.embrace()
-S1_test3.embrace()
-S1_1.embrace()
-S1_test4.embrace()
+#S1_2.embrace()
+#S1_3.embrace()
+#S1_4.embrace()
+#S1_test1.embrace()
+#S1_test2.embrace()
+#S1_test3.embrace()
+#S1_1.embrace()
+#S1_test4.embrace()
 
-S2_1.embrace()
-S2_2.embrace()
-S2_3.embrace()
-S2_4.embrace()
-S2_test1.embrace()
-S2_test2.embrace()
+#S2_1.embrace()
+#S2_2.embrace()
+#S2_3.embrace()
+#S2_4.embrace()
+#S2_test1.embrace()
+#S2_test2.embrace()
 
 S3_1.embrace()
-#S3_2.embrace()
+S3_2.embrace()
+S3_3.embrace()
+S3_4.embrace()
+S3_5.embrace()
+S3_6.embrace()
+S3_7.embrace()
+S3_8.embrace()
+S3_9.embrace()
+S3_test1.embrace()
 
 #S4_1.embrace()
 #S4_2.embrace()
