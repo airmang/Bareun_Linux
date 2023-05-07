@@ -57,9 +57,64 @@ class morph:
                                 #embrace_result.append(cls.morph_list[i])
                                 embrace_dict[driver].append(cls.morph_list[i][0])
                             break
+                        if cls.morph_list[flag[driver]][0] in ['와', '에서'] :
+                            JX_FLAG = flag[driver] - 1
+                            while(True):
+                                if cls.morph_list[JX_FLAG][1] in ['JX'] :
+                                    for i in range(JX_FLAG+1, pivot[driver]+1):
+                                        print(cls.morph_list[i])
+                                        #embrace_result.append(cls.morph_list[i])
+                                        embrace_dict[driver].append(cls.morph_list[i][0])
+                                    break
+                                elif JX_FLAG == 0:
+                                    #flag[driver] = 1
+                                    for i in range(0, pivot[driver]+1):
+                                        print(cls.morph_list[i])
+                                        #embrace_result.append(cls.morph_list[i])
+                                        embrace_dict[driver].append(cls.morph_list[i][0])
+                                    break
+                                JX_FLAG = JX_FLAG - 1
+                            break
+                       
+                        JX_FLAG = flag[driver] - 1
+                        while(True):
+                            if cls.morph_list[JX_FLAG][1] in ['JKS'] :
+                                for i in range(JX_FLAG+1, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            elif JX_FLAG == 0:
+                                #flag[driver] = 1
+                                for i in range(0, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            JX_FLAG = JX_FLAG - 1
+                        break
+                    
+                    if cls.morph_list[flag[driver]][1] == 'JKO' :
+                        JX_FLAG = flag[driver] - 1
+                        while(True):
+                            if cls.morph_list[JX_FLAG][1] in ['JX'] :
+                                for i in range(JX_FLAG+1, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            elif JX_FLAG == 0:
+                                #flag[driver] = 1
+                                for i in range(0, pivot[driver]+1):
+                                    print(cls.morph_list[i])
+                                    #embrace_result.append(cls.morph_list[i])
+                                    embrace_dict[driver].append(cls.morph_list[i][0])
+                                break
+                            JX_FLAG = JX_FLAG - 1
+                        break
 
                     if cls.morph_list[flag[driver]][1] == 'JX' :
-                        for i in range(flag[driver]+1, pivot[driver]+1):
+                        for i in range(flag[driver]+1, pivot[driver]+1):    
                             print(cls.morph_list[i])
                             #embrace_result.append(cls.morph_list[i])
                             embrace_dict[driver].append(cls.morph_list[i][0])
@@ -395,13 +450,15 @@ class tokenize:
 
 #관형절을 안은 문장    
 S1_1 = morph('형이 숙제를 하는 동생을 불렀다.')
-S1_2 = morph('산에 이쁜 꽃이 피었다.')
+S1_2 = morph('할아버지의 산에 이쁜 꽃이 피었다.')
 S1_3 = morph('그는 어제 먹다 남은 과자를 버렸다.')
 S1_4 = morph('친구는 내일 소풍 갈 장소를 검색했다.')
 S1_test1 = morph('영수가 버스에 탄 경희에게 말을 걸었다.')
 S1_test2 = morph('규현이는 잡고 있던 손을 놓지 않았다.')
 S1_test3 = morph('화병에 담긴 장미와 무궁화가 활짝 피었다.')
 S1_test4 = morph('나의 집에 돈이 많은 부자가 방문했다.')
+S1_test5 = morph('파수꾼이 경계초소에서 본 동물은 늑대는 아니었다.')
+S1_test6 = morph('철수는 민수가 집에서 본 영화가 무엇인지 안다.')
 #명사절을 안은 문장
 S2_1 = morph('나는 등교수업이 재기되기를 바란다.')
 S2_2 = morph('우리는 그가 옳았음을 알았다.')
@@ -436,21 +493,25 @@ S5_3 = morph('민수는 내게 친구들의 이름을 다 아느냐고 물었다
 S5_4 = morph('철수는 영희가 온다는 사실을 알았다.')
 S5_test1 = morph('얼른 진도를 나가자고 제안했다.')
 
-S_test1 = morph('플래시는 정말 빠르다.')
+S_test1 = morph('동생은 대학생이 된 형과 여행을 했다.')
 S_test2 = morph('가오갤에서 제일 좋아하는 캐릭터는 그루트다.')
+S_test3 = morph('영수가 버스에 탄 경희에게 말을 걸었다.')
+S_test4 = morph('나는 정수가 은희와 결혼한 사실을 몰랐다.')
+S_test5 = morph('나는 동생이 철수의 강아지와 산책한 사실을 몰랐다.')
 
 #S_test1.message()
 #S_test1.offset()
 
-
-#S1_2.embrace()
-#S1_3.embrace()
-#S1_4.embrace()
-#S1_test1.embrace()
-#S1_test2.embrace()
-#S1_test3.embrace()
-#S1_1.embrace()
-#S1_test4.embrace()
+S1_1.embrace()
+S1_2.embrace()
+S1_3.embrace()
+S1_4.embrace()
+S1_test1.embrace()
+S1_test2.embrace()
+S1_test3.embrace()
+S1_test4.embrace()
+S1_test5.embrace()
+S1_test6.embrace()
 
 #S2_1.embrace()
 #S2_2.embrace()
@@ -459,16 +520,16 @@ S_test2 = morph('가오갤에서 제일 좋아하는 캐릭터는 그루트다.'
 #S2_test1.embrace()
 #S2_test2.embrace()
 
-S3_1.embrace()
-S3_2.embrace()
-S3_3.embrace()
-S3_4.embrace()
-S3_5.embrace()
-S3_6.embrace()
-S3_7.embrace()
-S3_8.embrace()
-S3_9.embrace()
-S3_test1.embrace()
+#S3_1.embrace()
+#S3_2.embrace()
+#S3_3.embrace()
+#S3_4.embrace()
+#S3_5.embrace()
+#S3_6.embrace()
+#S3_7.embrace()
+#S3_8.embrace()
+#S3_9.embrace()
+#S3_test1.embrace()
 
 #S4_1.embrace()
 #S4_2.embrace()
@@ -485,9 +546,11 @@ S3_test1.embrace()
 #S5_4.embrace()
 #S5_test1.embrace()
 
-#S_test1.embrace()
-#S_test2.message()
-#S_test2.embrace()
+S_test1.embrace()
+S_test2.embrace()
+S_test3.embrace()
+S_test4.embrace()
+S_test5.embrace()
 
 #P1 = morph('안녕 나의 사랑')
 #P1.list()
