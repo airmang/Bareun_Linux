@@ -78,7 +78,7 @@ class morph:
                        
                         JX_FLAG = flag[driver] - 1
                         while(True):
-                            if cls.morph_list[JX_FLAG][1] in ['JKS'] :
+                            if cls.morph_list[JX_FLAG][1] in ['JKS', 'JX'] :
                                 for i in range(JX_FLAG+1, pivot[driver]+1):
                                     print(cls.morph_list[i])
                                     #embrace_result.append(cls.morph_list[i])
@@ -97,7 +97,7 @@ class morph:
                     if cls.morph_list[flag[driver]][1] == 'JKO' :
                         JX_FLAG = flag[driver] - 1
                         while(True):
-                            if cls.morph_list[JX_FLAG][1] in ['JX'] :
+                            if cls.morph_list[JX_FLAG][1] in ['JX', 'JKS'] :
                                 for i in range(JX_FLAG+1, pivot[driver]+1):
                                     print(cls.morph_list[i])
                                     #embrace_result.append(cls.morph_list[i])
@@ -447,7 +447,7 @@ class tokenize:
         print(ss)
         return ss
     
-
+'''
 #관형절을 안은 문장    
 S1_1 = morph('형이 숙제를 하는 동생을 불렀다.')
 S1_2 = morph('할아버지의 산에 이쁜 꽃이 피었다.')
@@ -557,4 +557,4 @@ S_test5.embrace()
 
 #P1 = tokenize('철수는 영희가 온다는 사실을 알았다.')
 
-
+'''
