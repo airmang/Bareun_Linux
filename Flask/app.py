@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import stemmer
 from flaskwebgui import FlaskUI
 
+
 app = Flask(__name__)
 
 ui = FlaskUI(app, width=500, height=500)
